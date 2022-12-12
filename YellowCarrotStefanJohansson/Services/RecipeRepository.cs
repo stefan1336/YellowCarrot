@@ -32,5 +32,20 @@ namespace YellowCarrotStefanJohansson.Services
         {
             return _context.Recipes.Include(r => r.Ingridients).ToList();
         }
+
+        public void AddRecipe(Recipe addrecipe)
+        {
+            _context.Add(addrecipe);
+        }
+
+        public void UpdateRecipe(Recipe updateRecipe)
+        {
+            _context.Recipes.Update(updateRecipe);
+        }
+
+        public void RemoveRecipe(Recipe recipeToRemove)
+        {
+            _context.Recipes.Remove(recipeToRemove);
+        }
     }
 }

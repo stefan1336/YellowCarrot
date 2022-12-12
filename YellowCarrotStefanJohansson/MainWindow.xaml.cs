@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YellowCarrotStefanJohansson.Data;
 using YellowCarrotStefanJohansson.Models;
+using YellowCarrotStefanJohansson.Services;
 
 namespace YellowCarrotStefanJohansson
 {
@@ -70,6 +71,7 @@ namespace YellowCarrotStefanJohansson
         {
             if(lvRecipe.SelectedItem != null)
             {
+                                      
                     ListViewItem selectedItem = (ListViewItem)lvRecipe.SelectedItem;
 
                     Recipe selectedRecipe =(Recipe)selectedItem.Tag;
@@ -126,6 +128,12 @@ namespace YellowCarrotStefanJohansson
             }
 
 
+        }
+
+        private void lvRecipe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnDetails.IsEnabled = true;
+            btnDeleteRecipe.IsEnabled = true;
         }
     }
 }

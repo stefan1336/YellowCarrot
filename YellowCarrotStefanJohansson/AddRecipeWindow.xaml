@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YellowCarrotStefanJohansson"
         mc:Ignorable="d"
-        Title="AddRecipeWindow" Height="450" Width="450">
+        Title="AddRecipeWindow" Height="600" Width="450">
     <Grid Background="Tomato">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -23,93 +24,136 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label
-            Grid.Column="0"
-            Grid.ColumnSpan="5"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Grid.RowSpan="2"
-            Content="New Recipe"
-            FontSize="50"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
-            FontFamily="Cooper black"/>
+            FontFamily="Cooper black"
+            Content="New recipe"
+            FontSize="50"/>
         <Label
             Grid.Column="1"
-            Grid.Row="2"
+            Grid.Row="3"
             Content="Name:"
-            Margin="10"
-            FontSize="15"            
+            Margin="3"
+            FontSize="13"            
             VerticalAlignment="Bottom"/>
         <Label
             Grid.Column="1"
-            Grid.Row="3"
-            Margin="10"
+            Grid.Row="6"
+            Margin="3"
             Content="Ingridient:"
-            FontSize="15"            
+            FontSize="13"            
             VerticalAlignment="Bottom"/>
         <Label
-            Grid.Column="1"
-            Grid.Row="4"
-            Margin="10"
-            Content="Tag:"
-            FontSize="15"
-            VerticalAlignment="Bottom"/>
-        <Label
-            Grid.Column="1"
-            Grid.Row="5"
-            Margin="10"
-            Content="Time:"
-            FontSize="15"
-            VerticalAlignment="Bottom"/>
-        <TextBox
-            Name="txtRecipeName"
-            Grid.Column="2"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            Margin="10"
-            VerticalAlignment="Bottom"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1"
-            Background="Transparent"
-            />
-        <TextBox
-            Name="txtIngredientName"
-            Grid.Column="2"
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            Margin="10"
-            VerticalAlignment="Bottom"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1"
-            Background="Transparent"
-            />
-        <TextBox
-            Name="txtTagName"
-            Grid.Column="2"
-            Grid.Row="4"
-            Grid.ColumnSpan="2"
-            Margin="10"
-            VerticalAlignment="Bottom"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1"
-            Background="Transparent"
-            />
-        <TextBox
-            Name="txtTimeName"
-            Grid.Column="2"
-            Grid.Row="5"
-            Grid.ColumnSpan="2"
-            Margin="10"
-            VerticalAlignment="Bottom"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1"
-            Background="Transparent"
-            />
-        <Button
-            Name="btnSaveRecipe"
             Grid.Column="3"
             Grid.Row="6"
-            Margin="10"
+            Margin="3"
+            Content="Quantity:"
+            FontSize="13"
+            VerticalAlignment="Bottom"/>
+        <Label
+            Grid.Column="1"
+            Grid.Row="5"
+            Margin="3"
+            Content="Tag:"
+            FontSize="13"            
+            VerticalAlignment="Bottom"/>
+        <Label
+            Grid.Column="1"
+            Grid.Row="4"
+            Margin="3"
+            Content="Time:"
+            FontSize="13"
+            VerticalAlignment="Bottom"/>
+        <TextBox
+            Name="txtNewRecipeName"
+            Grid.Column="2"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="3"
+            FontSize="13"
+            VerticalAlignment="Bottom"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            />
+        <TextBox
+            Name="txtNewIngredientName"
+            Grid.Column="2"
+            Grid.Row="6"            
+            Margin="3"
+            FontSize="13"
+            VerticalAlignment="Bottom"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            />
+        <TextBox
+            Name="txtNewQuantity"
+            Grid.Column="4"
+            Grid.Row="6"
+            Margin="3"
+            FontSize="13"
+            VerticalAlignment="Bottom"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            />
+        <TextBox
+            Name="txtNewTime"
+            Grid.Column="2"
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Margin="3"
+            FontSize="13"
+            VerticalAlignment="Bottom"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            />
+        <TextBox
+            Name="txtNewTag"
+            Grid.Column="2"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Margin="3"
+            FontSize="13"
+            VerticalAlignment="Bottom"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            />
+        <ListView
+            Name="lvAddIngredient"
+            Grid.Column="2"
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="3"
+            Margin="5"
+            BorderBrush="Black"
+            BorderThickness="3"/>
+        <Button
+            Name="btnSaveRecipe"
+            Grid.Column="0"
+            Grid.Row="8"
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="2"
+            Margin="20"
             Content="Save" Click="btnSaveRecipe_Click"/>
+        <Button
+            Name="btnAddNewRecipe"
+            Grid.Column="4"
+            Grid.Row="8"
+            Margin="10"
+            Content="Add" Click="btnAddNewRecipe_Click"/>
     </Grid>
 </Window>

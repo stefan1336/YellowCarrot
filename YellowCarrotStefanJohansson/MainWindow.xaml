@@ -40,7 +40,7 @@
             Grid.Row="2"
             Grid.RowSpan="4"
             BorderBrush="Black"
-            BorderThickness="5"/>
+            BorderThickness="5" SelectionChanged="lvRecipe_SelectionChanged"/>
         <Button
             Name="btnAddRecipe"
             Grid.Row="6"
