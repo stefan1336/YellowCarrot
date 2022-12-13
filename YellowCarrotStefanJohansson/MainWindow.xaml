@@ -46,22 +46,50 @@
             Grid.Row="6"
             Grid.Column="1"
             Margin="10"
-            Content="Add recipe" Click="btnAddRecipe_Click"
-            />
+            Content="Add recipe" 
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White" 
+            Click="btnAddRecipe_Click">
+            <Button.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+            </Button.Resources>
+        </Button>
         <Button
             Name="btnDetails"
             Grid.Row="6"
             Grid.Column="2"
             Margin="10"
-            Content="Details" Click="btnDetails_Click"
-            
-            />
+            Content="Details"
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White" Click="btnDetails_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Button
             Name="btnDeleteRecipe"
             Grid.Row="6"
             Grid.Column="3"
             Margin="10"
-            Content="Delete" Click="btnDeleteRecipe_Click"
-            />
+            Content="Delete"
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White" 
+            Click="btnDeleteRecipe_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

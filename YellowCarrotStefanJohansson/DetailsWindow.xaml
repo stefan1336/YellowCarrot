@@ -41,21 +41,21 @@
             FontSize="50"/>
         <Label
             Grid.Column="1"
-            Grid.Row="5"
-            Margin="5"
+            Grid.Row="6"
+            Margin="3"
             Content="Ingridient:"
-            FontSize="15"            
+            FontSize="13"            
             VerticalAlignment="Bottom"/>
         <Label
             Grid.Column="1"
-            Grid.Row="6"
-            Margin="5"
+            Grid.Row="5"
+            Margin="3"
             Content="Tag:"
-            FontSize="15"            
+            FontSize="13"            
             VerticalAlignment="Bottom"/>
         <Label
             Grid.Column="3"
-            Grid.Row="5"
+            Grid.Row="6"
             Margin="3"
             Content="Quantity:"
             FontSize="15"
@@ -63,15 +63,15 @@
         <Label
             Grid.Column="1"
             Grid.Row="4"
-            Margin="5"
+            Margin="3"
             Content="Time:"
-            FontSize="15"
+            FontSize="13"
             VerticalAlignment="Bottom"/>
         <TextBox
             Name="txtRecipeName"
             Grid.Column="2"
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Margin="5"
             VerticalAlignment="Bottom"
             BorderBrush="Black"
@@ -81,7 +81,7 @@
         <TextBox
             Name="txtIngredientName"
             Grid.Column="2"
-            Grid.Row="5"            
+            Grid.Row="6"            
             Margin="5"
             VerticalAlignment="Bottom"
             BorderBrush="Black"
@@ -91,7 +91,7 @@
         <TextBox
             Name="txtQuantityName"
             Grid.Column="4"
-            Grid.Row="5"
+            Grid.Row="6"
             Margin="5"
             VerticalAlignment="Bottom"
             BorderBrush="Black"
@@ -112,7 +112,7 @@
         <TextBox
             Name="txtTagName"
             Grid.Column="2"
-            Grid.Row="6"
+            Grid.Row="5"
             Grid.ColumnSpan="2"
             Margin="5"
             VerticalAlignment="Bottom"
@@ -128,7 +128,7 @@
             Grid.RowSpan="3"
             Margin="5"
             BorderBrush="Black"
-            BorderThickness="3" SelectionChanged="lvAddIngredient_SelectionChanged"/>
+            BorderThickness="3" SelectionChanged="lvAddIngredient_SelectionChanged" />
         <Button
             Name="btnSave"
             Grid.Column="0"
@@ -136,28 +136,87 @@
             Grid.ColumnSpan="2"
             Grid.RowSpan="3"
             Content="Save details"
-            Margin="30" Click="btnSave_Click"
-            />
+            Margin="30" 
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White"     
+            Click="btnSave_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Button
             Name="btnRemoveIngredient"
             Grid.Column="3"
             Grid.Row="10"
             Content="Remove"
-            Margin="8" Click="btnRemoveIngredient_Click"
-            />
+            Margin="8"
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White"     
+            Click="btnRemoveIngredient_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Button
             Name="btnAddIngredient"
-            Grid.Column="4"
-            Grid.Row="7"
+            Grid.Column="5"
+            Grid.Row="6"
             Content="Add"
-            Margin="5" Click="btnAddIngredient_Click"
-            />
+            Margin="3"
+            VerticalAlignment="Bottom"
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White"     
+            Click="btnAddIngredient_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Button
             Name="btnUnlock"
             Grid.Column="1"
             Grid.Row="3"
             Content="Unlock"
-            Margin="8" Click="btnUnlock_Click"
-            />
+            Margin="8" 
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White"     
+            Click="btnUnlock_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button
+            Name="btnBack"
+            Grid.Row="11"
+            Grid.Column="5"                    
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"           
+            Content="Back"
+            FontFamily="cooper black"
+            Foreground="White"
+            Background="Black"
+            BorderBrush="White"         
+            Click="btnBack_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

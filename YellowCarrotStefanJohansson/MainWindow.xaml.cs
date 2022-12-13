@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace YellowCarrotStefanJohansson
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Ingredient> ingredients = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -62,7 +64,7 @@ namespace YellowCarrotStefanJohansson
             // öppna fönstret för att lägga till ett recept
             AddRecipeWindow addRecipeWindow = new();
             addRecipeWindow.Show();
-            // Close();
+            Close();
         }
 
 
@@ -74,8 +76,8 @@ namespace YellowCarrotStefanJohansson
                                       
                     ListViewItem selectedItem = (ListViewItem)lvRecipe.SelectedItem;
 
-                    Recipe selectedRecipe =(Recipe)selectedItem.Tag;
-
+                    Recipe selectedRecipe = (Recipe)selectedItem.Tag;
+        
                     // Om ett recept är valt ska knappen synas
                     DetailsWindow detailsWindow = new(selectedRecipe.RecipeId);
                     detailsWindow.Show();
@@ -84,8 +86,8 @@ namespace YellowCarrotStefanJohansson
             {
                 MessageBox.Show("Please select a recipe");
             }
-   
-            // Close();
+
+            Close();
         }
 
         private void btnDeleteRecipe_Click(object sender, RoutedEventArgs e)
@@ -126,7 +128,6 @@ namespace YellowCarrotStefanJohansson
             {
                 MessageBox.Show("Please pick a recipe to delete");
             }
-
 
         }
 

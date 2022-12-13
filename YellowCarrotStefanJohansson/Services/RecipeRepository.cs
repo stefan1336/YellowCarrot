@@ -9,7 +9,7 @@ using YellowCarrotStefanJohansson.Models;
 
 namespace YellowCarrotStefanJohansson.Services
 {
-    internal class RecipeRepository
+    internal class RecipeRepository : IDisposable
     {
         private readonly AppDbContext _context;
 
@@ -25,7 +25,7 @@ namespace YellowCarrotStefanJohansson.Services
         /// <returns></returns>
         public Recipe? GetRecipe(int id)
         {
-            return _context.Recipes.Include(r => r.Ingridients).FirstOrDefault(r => r.RecipeId == id);
+            return _context.Recipes.Include(r => r.Ingridients).Include(r=>r.Tag).FirstOrDefault(r => r.RecipeId == id);
         }
 
         public List<Recipe> GetRecipes()
@@ -35,7 +35,12 @@ namespace YellowCarrotStefanJohansson.Services
 
         public void AddRecipe(Recipe addrecipe)
         {
-            _context.Add(addrecipe);
+            _context.Recipes.Add(addrecipe);
+        }
+
+        public void Complete()
+        {
+            _context.SaveChanges();
         }
 
         public void UpdateRecipe(Recipe updateRecipe)
@@ -43,9 +48,18 @@ namespace YellowCarrotStefanJohansson.Services
             _context.Recipes.Update(updateRecipe);
         }
 
+        public void RemoveIngredient(Ingredient ingredientToRemove)
+        {
+            _context.Ingredients.Remove(ingredientToRemove);
+        }
         public void RemoveRecipe(Recipe recipeToRemove)
         {
             _context.Recipes.Remove(recipeToRemove);
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }
