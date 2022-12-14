@@ -35,6 +35,7 @@ namespace YellowCarrotStefanJohansson
             UpdateUi();
         }
 
+        // Uppdatera ui för att printa ut mina ingredienser
         private void UpdateUi()
         {
             cbTag.Items.Clear();
@@ -58,45 +59,37 @@ namespace YellowCarrotStefanJohansson
         }
 
 
-
+        // Spara receptet
         private void btnSaveRecipe_Click(object sender, RoutedEventArgs e)
         {
-            // Spara receptet
+            
             // Om inte alla textboxes är ifyllda ska ett varningsmedelande printas
             string newRecipeName = txtNewRecipeName.Text;
             int newTime = int.Parse(txtNewTime.Text);
-            string newTag = ((ComboBoxItem)cbTag.SelectedItem).Content.ToString();
-
-            Console.WriteLine(newTag);
-            //string addedIngredient = lvAddIngredient.Tag as string;
-
-            if(string.IsNullOrEmpty(newRecipeName) || string.IsNullOrEmpty(newTag))
+            Tag? newTag = (Tag)((ComboBoxItem)cbTag.SelectedItem).Tag;
+            
+            if(string.IsNullOrEmpty(newRecipeName) || newTag == null)
             {
                 MessageBox.Show("Please make a full registration of your new recipe");
 
-                if(newTime == null)
+                if(newTime == 0)
                 {
                     MessageBox.Show("Please enter timespan for your recipe");
                 }
             }
             else
-            {
-
-               
+            {              
                 using (AppDbContext context = new())
                 {
-
                     RecipeRepository recipeRepos = new(context);
+                    IngredientRepository ingredientRepos = new(context);
 
                     Recipe newRecipe = new();
-
-                    Tag tag = new();
-                    tag.Categories = newTag;
 
                     newRecipe.RecipeName = newRecipeName;
                     newRecipe.RecipeTime = TimeSpan.FromMinutes(newTime);
 
-                    newRecipe.Tag= tag;
+                    newRecipe.TagId = newTag.TagId;
 
                     newRecipe.Ingridients = ingredients;
                     
@@ -111,15 +104,12 @@ namespace YellowCarrotStefanJohansson
             }
        
         }
-
+        // Lägga till ingrediens till listan
         private void btnAddNewRecipe_Click(object sender, RoutedEventArgs e)
         {
-            // Lägga till ingrediens till listan
-            // Lägga till en ingridiens till ett recept
             
             string newIngredientName = txtNewIngredientName.Text;
             string newQuantityName = txtNewQuantity.Text;
-
 
             if (string.IsNullOrEmpty(newIngredientName) && string.IsNullOrEmpty(newQuantityName))
             {
@@ -131,9 +121,11 @@ namespace YellowCarrotStefanJohansson
 
                 ingredient.Name = newIngredientName;
                 ingredient.Quantity = newQuantityName;
-
+                ingredients.Add(ingredient);
+                
                 lvAddIngredient.Items.Add($"{ingredient.Name} / {ingredient.Quantity}");
             }
+
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -149,25 +141,4 @@ namespace YellowCarrotStefanJohansson
 
     //}
 }
-//List<Ingredient> ingredients = context.Ingredients.ToList();
 
-//foreach(Ingredient ingredient in ingredients)
-//{
-//    ListViewItem item = new();
-
-//    item.Content = ingredient.Name;
-//    item.Content = ingredient.Quantity;
-//    item.Tag = ingredient;
-//}
-//Recipe? recipe = new();
-
-//foreach(Ingredient ingredients in recipe.Ingridients)
-//{
-//    lvAddIngredient.Tag = ingredients;
-//}
-
-//ListViewItem selectedListViewItems = (ListViewItem)lvAddIngredient.SelectedItems;
-
-//Ingredient selectedIngredient = (Ingredient)selectedListViewItems.Tag;
-
-//Recipe newRecipe = new();

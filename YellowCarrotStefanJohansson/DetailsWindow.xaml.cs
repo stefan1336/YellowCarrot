@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,10 @@ namespace YellowCarrotStefanJohansson
     /// </summary>
     public partial class DetailsWindow : Window
     {
+        private Recipe _currentRecipe;
+
+        private List<Ingredient> _newIngredients = new();
+
         private List<Ingredient> ingredients = new();
         public DetailsWindow(int recipeId)
         {
@@ -32,30 +37,43 @@ namespace YellowCarrotStefanJohansson
             LockButton();
 
             GetRecipe(recipeId);
-            //using (AppDbContext context = new())
-            //{
-
-
-            //}
-
 
         }
-        // Hämtar mina recept och printar ut dom i mitt DetailsWindow
+
         private void GetRecipe(int recipeId)
         {
             using(AppDbContext context = new())
             {
-                Recipe? recipe = new RecipeRepository(context).GetRecipe(recipeId);
-
-                txtRecipeName.Text = recipe.RecipeName;
-                txtTimeName.Text = $"{recipe.RecipeTime.TotalMinutes.ToString()} minutes";
-                txtTagName.Text = $"{recipe.Tag.Categories}";
+                _currentRecipe = new RecipeRepository(context).GetRecipe(recipeId);
+                              
+                txtRecipeName.Text = _currentRecipe.RecipeName;
+                txtTimeName.Text = $"{_currentRecipe.RecipeTime.TotalMinutes.ToString()} minutes";
+                txtTagName.Text = $"{_currentRecipe.Tag.Categories}";
                     
-                foreach(Ingredient ingredient in recipe.Ingridients)
+                foreach(Ingredient ingredient in _currentRecipe.Ingridients)
                 {
-                    lvAddIngredient.Items.Add($"{ingredient.Name} / {ingredient.Quantity}");
+                    ListViewItem item = new();
+                    item.Content = $"{ingredient.Name} / {ingredient.Quantity}";
+                    item.Tag = ingredient;
+                    lvAddIngredient.Items.Add(item);
                 }
 
+            }
+        }
+
+        private void UpdateUi()
+        {
+            lvAddIngredient.Items.Clear();
+
+            using(AppDbContext context = new())
+            {
+                foreach (Ingredient ingredient in _currentRecipe.Ingridients)
+                {
+                    ListViewItem item = new();
+                    item.Content = $"{ingredient.Name} / {ingredient.Quantity}";
+                    item.Tag = ingredient;
+                    lvAddIngredient.Items.Add(item);
+                }
             }
         }
 
@@ -73,87 +91,69 @@ namespace YellowCarrotStefanJohansson
         }
         // Låser upp knappar och textboxes för att möjliggöra ändringar
         private void btnUnlock_Click(object sender, RoutedEventArgs e)
-        {
-            
-            
-            btnAddIngredient.IsEnabled = true;
-            btnRemoveIngredient.IsEnabled = true;
+        {                   
+            btnAddIngredient.IsEnabled = true;            
             btnSave.IsEnabled = true;
-            txtTimeName.IsEnabled = true;
-            txtTagName.IsEnabled = true;
             txtRecipeName.IsEnabled = true;
             txtIngredientName.IsEnabled = true;
             txtQuantityName.IsEnabled = true;
-
+            lvAddIngredient.IsEnabled=true;
         }
 
         // Spara eventuella ändringar
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            
-            string newRecipeName = txtRecipeName.Text.Trim();
-            int newTime = int.Parse(txtTimeName.Text);
-            string newTag = txtTagName.Text.Trim();
-
-            if (string.IsNullOrEmpty(newRecipeName))
+            using (AppDbContext context = new())
             {
+                RecipeRepository recipeRepos = new(context);
 
-                using (AppDbContext context = new())
+                Recipe? dbRecipe = recipeRepos.GetRecipe(_currentRecipe.RecipeId);
+
+                if (dbRecipe != null)
                 {
-                    Recipe updateRecipe = new();
-                    Tag updateTag = new();
-
-                    updateRecipe.RecipeName = newRecipeName;
-                    updateRecipe.RecipeTime = TimeSpan.FromMinutes(newTime);
-                    updateRecipe.Tag = updateTag;
-                    updateTag.Categories = newTag;
-                    updateRecipe.Ingridients = ingredients;
-
-                    context.Recipes.Update(updateRecipe);
-                    context.SaveChanges();
+                    _newIngredients.ForEach(i => dbRecipe.Ingridients.Add(i));
                 }
 
-                MainWindow mainWindow = new();
-                mainWindow.Show();
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Please make a full details change");
+                if (dbRecipe.RecipeName != txtRecipeName.Text.Trim())
+                {
+                    dbRecipe.RecipeName = txtRecipeName.Text.Trim(); ;
+                }
+
+                recipeRepos.UpdateRecipe(dbRecipe);
+                context.SaveChanges(); 
             }
 
+            MainWindow mainWindow = new();
+            mainWindow.Show();
+            Close();
+            
         }
 
         // Ta bort en ingridiens
         private void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
         {
-            if(lvAddIngredient.SelectedItem != null)
+            if(lvAddIngredient != null)
             {
+                //ListViewItem selectedListViewItem = (ListViewItem)lvAddIngredient.Tag;
+                //Ingredient ingredientToRemove = (Ingredient)selectedListViewItem.Tag;
                 ListViewItem selectedListViewItem = lvAddIngredient.SelectedItem as ListViewItem;
-
                 Ingredient ingredientToRemove = selectedListViewItem.Tag as Ingredient;
 
                 using (AppDbContext context = new())
                 {
-                    new RecipeRepository(context).RemoveIngredient(ingredientToRemove);
+                    new IngredientRepository(context).RemoveIngredient(ingredientToRemove);
                     context.SaveChanges();
                 }
 
+                UpdateUi();
             }
-            else
-            {
-                MessageBox.Show("Please pick an ingredient to remove");
-            }
-
-                
-  
+            
         }
 
         // Lägga till en ingridiens till ett recept
         private void btnAddIngredient_Click(object sender, RoutedEventArgs e)
         {
            
-
             string newIngredientName = txtIngredientName.Text;
             string newTagName = txtQuantityName.Text;
 
@@ -169,8 +169,11 @@ namespace YellowCarrotStefanJohansson
                 ingredient.Quantity = newTagName;
 
                 lvAddIngredient.Items.Add($"{ingredient.Name} / {ingredient.Quantity}");
+                _newIngredients.Add(ingredient);
             }
-       
+
+            
+
         }
 
         // Återgå till tidigare fönster
@@ -183,7 +186,9 @@ namespace YellowCarrotStefanJohansson
 
         private void lvAddIngredient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            btnRemoveIngredient.IsEnabled = true;
         }
     }
+
 }
+

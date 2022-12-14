@@ -57,11 +57,9 @@ namespace YellowCarrotStefanJohansson
                 }
             }
         }
-
+        // öppna fönstret för att lägga till ett recept
         private void btnAddRecipe_Click(object sender, RoutedEventArgs e)
-        {
-            // Lätta till ett recipe
-            // öppna fönstret för att lägga till ett recept
+        {            
             AddRecipeWindow addRecipeWindow = new();
             addRecipeWindow.Show();
             Close();

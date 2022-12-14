@@ -48,15 +48,10 @@ namespace YellowCarrotStefanJohansson.Services
             _context.Recipes.Update(updateRecipe);
         }
 
-        public void RemoveIngredient(Ingredient ingredientToRemove)
-        {
-            _context.Ingredients.Remove(ingredientToRemove);
-        }
         public void RemoveRecipe(Recipe recipeToRemove)
         {
             _context.Recipes.Remove(recipeToRemove);
         }
-
         public void Dispose()
         {
             _context?.Dispose();
